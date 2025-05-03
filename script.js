@@ -12,7 +12,8 @@ searchInput.addEventListener('input', function () {
 
 // Toggle Download Menu
 function toggleMenu(button) {
-  const menu = button.nextElementSibling;
+  const card = button.closest('.pack-card');
+  const menu = card.querySelector('.download-menu');
   menu.classList.toggle('hidden');
 }
 
