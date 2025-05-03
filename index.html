@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>chand6464 Resource Packs</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body class="p-4">
-    <!-- Header -->
-    <header class="flex items-center justify-between mb-8">
-      <div class="text-xl font-bold text-white"><a href="index.html">chand6464</a></div>
-    </header>
 
-    <!-- Main Title -->
-    <main class="text-center">
-      <h1 class="text-4xl font-bold text-white mb-2">Resource Packs</h1><br>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chand6464 Resource Packs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-      <!-- Search Bar -->
-      <div class="mb-6">
-        <input
-          type="text"
-          id="search"
-          placeholder="Search packs..."
-          class="w-full max-w-md px-4 py-2 rounded-xl border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+<body class="p-4">
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-8">
+    <div class="text-xl font-bold text-white"><a href="index.html">chand6464</a></div>
+  </header>
 
-      <!-- Texture Pack Grid -->
-      <div id="packList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-        <!-- Pack Card -->
-        <div class="pack-card bg-gray-900 rounded-xl shadow-md p-4 w-full max-w-sm relative" data-name="chand6464's Crystal Pack">
-          <img src="pack.png" alt="Crystal Pack" class="rounded-lg mb-4 w-full max-h-24 object-cover">
-          <h2 class="text-lg font-semibold text-white">chand6464's Crystal Pack</h2>
-          <p class="text-gray-400 mb-2">The Best Texture Pack for CPVP</p>
-          <button onclick="toggleMenu(this)" class="absolute top-4 right-4 bg-green-600 hover:bg-green-700 text-white text-sm w-10 h-10 rounded-full flex items-center justify-center">
-            <img src="download-button.png" class="w-5 h-5" />
-          </button>
-          <a href="changelog/chandcrystal.html" class="text-blue-400 hover:underline text-sm">View Changelog</a>
+  <!-- Main Title -->
+  <main class="text-center">
+    <h1 class="text-4xl font-bold text-white mb-2">Resource Packs</h1><br>
 
-          <!-- Download Menu -->
-          <div class="download-menu absolute top-14 right-4 bg-gray-800 border border-gray-700 rounded-lg p-4 w-64 hidden z-10">
-            <p class="text-white mb-2">Select version</p>
-            <select id="versionSelect" class="w-full mb-4 px-2 py-1 bg-gray-700 text-white rounded">
-              <option>1.16</option>
-              <option>1.17</option>
-              <option>1.18</option>
-              <option>1.19</option>
-              <option>1.20</option>
-              <option>1.21</option>
-              <option>1.21.4</option>
-            </select>
-            <button onclick="downloadPack()" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Download</button>
-          </div>
+    <!-- Search Bar -->
+    <div class="mb-6">
+      <input type="text" id="search" placeholder="Search packs..."
+        class="w-full max-w-md px-4 py-2 rounded-xl border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <!-- Texture Pack Grid -->
+    <div id="packList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+      <!-- Pack Card -->
+      <div class="pack-card bg-gray-900 rounded-xl shadow-md p-4 w-full max-w-sm relative"
+        data-name="chand6464's Crystal Pack">
+        <img src="pack.png" alt="Crystal Pack" class="rounded-lg mb-4 w-full max-h-24 object-cover">
+        <h2 class="text-lg font-semibold text-white">chand6464's Crystal Pack</h2>
+        <p class="text-gray-400 mb-2">The Best Texture Pack for CPVP</p>
+        <button onclick="toggleMenu(this)"
+          class="absolute top-4 right-4 bg-green-600 hover:bg-green-700 text-white text-sm w-10 h-10 rounded-full flex items-center justify-center">
+          <img src="download-button.png" class="w-5 h-5" />
+        </button>
+        <a href="changelog\chandcrystal.html" class="mt-2 inline-block text-sm text-blue-400 hover:underline">See
+          Changelog</a>
+
+        <!-- Download Menu -->
+        <div
+          class="download-menu absolute top-14 right-4 bg-gray-800 border border-gray-700 rounded-lg p-4 w-64 hidden z-10">
+          <p class="text-white mb-2">Select version</p>
+          <select id="versionSelect" class="w-full mb-4 px-2 py-1 bg-gray-700 text-white rounded">
+            <option>1.16</option>
+            <option>1.17</option>
+            <option>1.18</option>
+            <option>1.19</option>
+            <option>1.20</option>
+            <option>1.21</option>
+            <option>1.21.4</option>
+          </select>
+          <button onclick="downloadPack()"
+            class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Download</button>
         </div>
-
-        <!-- Other Packs -->
-        
       </div>
-    </main>
 
-    <script src="script.js"></script>
-  </body>
+      <!-- Other Packs -->
+
+    </div>
+  </main>
+  <br><br><br><br><br><br><br><br><br><br><br>
+
+  <footer>
+    <p>Made with ❤️ by <a href="https://chatgpt.com">ChatGPT</a>, <a href="https://github.com/features/copilot">Github Copilot</a> and <a href="https://dsc.gg/itzzchand">chand6464</a>. </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
