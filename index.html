@@ -1,76 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chand6464 Resource Packs</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>chand6464 Resources</title>
   <link rel="stylesheet" href="styles.css" />
-</head>
+  <style>
+      /* General dark theme */
+body {
+  background-color: #0f0f10;
+  color: #e0e0e0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-<body class="p-4">
-  <!-- Header -->
-  <header class="flex items-center justify-between mb-8">
-    <div class="text-xl font-bold text-white"><a href="index.html">chand6464</a></div>
+/* Top left logo */
+header {
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #00dc82;
+}
+
+/* Main content */
+main {
+  text-align: center;
+  margin-top: 120px;
+}
+
+/* Title */
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 60px;
+  color: #ffffff;
+}
+
+/* Projects grid */
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding-bottom: 60px;
+}
+
+/* Individual project card */
+.project {
+  background-color: #1a1a1c;
+  border: 1px solid #2c2c2e;
+  border-radius: 16px;
+  padding: 30px;
+  width: 320px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(0, 220, 130, 0.3);
+}
+
+/* Project title */
+.project-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #00dc82;
+}
+
+/* Version */
+.project-version {
+  font-size: 1rem;
+  color: #b0b0b0;
+  margin-bottom: 15px;
+}
+
+/* Changelog button */
+.changelog-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: #00dc82;
+  color: #0f0f10;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.changelog-btn:hover {
+  background-color: #00b76b;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">chand6464</div>
   </header>
 
-  <!-- Main Title -->
-  <main class="text-center">
-    <h1 class="text-4xl font-bold text-white mb-2">Resource Packs</h1><br>
+  <main>
+    <h1 class="title">Resources</h1>
 
-    <!-- Search Bar -->
-    <div class="mb-6">
-      <input type="text" id="search" placeholder="Search packs..."
-        class="w-full max-w-md px-4 py-2 rounded-xl border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-    </div>
-
-    <!-- Texture Pack Grid -->
-    <div id="packList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-      <!-- Pack Card -->
-      <div class="pack-card bg-gray-900 rounded-xl shadow-md p-4 w-full max-w-sm relative"
-        data-name="chand6464's Crystal Pack">
-        <img src="pack.png" alt="Crystal Pack" class="rounded-lg mb-4 w-full max-h-24 object-cover">
-        <h2 class="text-lg font-semibold text-white">chand6464's Crystal Pack</h2>
-        <p class="text-gray-400 mb-2">The Best Texture Pack for CPVP</p>
-        <button onclick="toggleMenu(this)"
-          class="absolute top-4 right-4 bg-green-600 hover:bg-green-700 text-white text-sm w-10 h-10 rounded-full flex items-center justify-center">
-          <img src="download-button.png" class="w-5 h-5" />
-        </button>
-        <a href="https://raw.githubusercontent.com/Chand6464/texturepacks/refs/heads/Packs/ChandCrystal/Changelog.txt" class="mt-2 inline-block text-sm text-blue-400 hover:underline">See
-          Changelog</a>
-
-        <!-- Download Menu -->
-        <div
-          class="download-menu absolute top-14 right-4 bg-gray-800 border border-gray-700 rounded-lg p-4 w-64 hidden z-10">
-          <p class="text-white mb-2">Select version</p>
-          <select id="versionSelect" class="w-full mb-4 px-2 py-1 bg-gray-700 text-white rounded">
-            <option>1.16</option>
-            <option>1.17</option>
-            <option>1.18</option>
-            <option>1.19</option>
-            <option>1.20</option>
-            <option>1.21</option>
-            <option>1.21.4</option>
-          </select>
-          <button onclick="window.location.href='https://github.com/Chand6464/texturepacks/raw/refs/heads/Packs/ChandCrystal/!%20%20%20%20%C2%A7bChand%C2%A73CRYSTAL.zip';"
-            class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Download</button>
-        </div>
+    <div class="projects">
+      <!-- Project Card 1 -->
+      <div class="project" onclick="window.location.href='https://github.com/Chand6464/texturepacks/raw/refs/heads/Packs/ChandCrystal/!%20%20%20%20%C2%A7bChand%C2%A73CRYSTAL.zip'">
+        <h2 class="project-title">chand6464's CPVP+ Pack</h2>
+        <p class="project-version">1.16 → 1.21+</p>
+        <a class="changelog-btn" href="https://raw.githubusercontent.com/Chand6464/texturepacks/refs/heads/Packs/ChandCrystal/Changelog.txt" onclick="event.stopPropagation();">
+          View Changelogs
+        </a>
       </div>
 
-      <!-- Other Packs -->
+      <!-- Project Card 2 (example duplicate) -->
+      <div class="project" onclick="window.location.href='https://drive.google.com/file/d/1icxBV6AC_9znnpBYcsKUh2LgmOZLQR1K/view?usp=drivesdk'">
+        <h2 class="project-title">chand6464 Best Optimization Mods Latest (Google Drive)</h2>
+        <p class="project-version">Only 1.21</p>
+        <a class="changelog-btn" href="#" onclick="event.stopPropagation();">
+          View Changelogs (Not Available)
+        </a>
+      </div>
 
+      <!-- You can copy and paste more .project divs here -->
+      
+      <div class="project" onclick="window.location.href='https://drive.google.com/file/d/1c4RP8fK0-6FKpu2UORcu0EO9yQbKt5gM/view?usp=drivesdk'">
+        <h2 class="project-title">TheNoobZan16x (Google Drive)</h2>
+        <p class="project-version">1.8.9</p>
+        <a class="changelog-btn" href="#" onclick="event.stopPropagation();">
+          View Changelogs (Not Available)
+        </a>
+      </div>
+      
     </div>
   </main>
-  <br><br><br><br><br><br><br><br><br><br><br>
-
-  <footer>
-    <p>Made with ❤️ by <a href="https://chatgpt.com">ChatGPT</a>, <a href="https://github.com/features/copilot">Github Copilot</a> and <a href="https://dsc.gg/itzzchand">chand6464</a>. </p>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
-
 </html>
-
-
