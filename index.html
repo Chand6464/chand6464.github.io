@@ -1,106 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta property="og:title" content="Chand6464 Resources" />
-<meta property="og:description" content="Best Texture packs and other stuff!" />
-<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2HnIS8lfc_ZdhqrG6WJy4ozPTuwALS_qFMg&usqp=CAU" />
-<meta property="og:url" content="https://chand6464.github.io/" />
+  <meta property="og:title" content="Chand6464 Resources" />
+  <meta property="og:description" content="Best Texture packs and other stuff!" />
+  <meta property="og:image"
+    content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2HnIS8lfc_ZdhqrG6WJy4ozPTuwALS_qFMg&usqp=CAU" />
+  <meta property="og:url" content="https://chand6464.github.io/" />
 
   <title>chand6464 Resources</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-      /* General dark theme */
-body {
-  background-color: #0f0f10;
-  color: #e0e0e0;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-}
+    /* General dark theme */
+    body {
+      background-color: #0f0f10;
+      color: #e0e0e0;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Top left logo */
-header {
-  position: fixed;
-  top: 20px;
-  left: 30px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #00dc82;
-}
+    /* Top left logo */
+    header {
+      position: fixed;
+      top: 20px;
+      left: 30px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #00dc82;
+    }
 
-/* Main content */
-main {
-  text-align: center;
-  margin-top: 120px;
-}
+    /* Main content */
+    main {
+      text-align: center;
+      margin-top: 120px;
+    }
 
-/* Title */
-.title {
-  font-size: 2.5rem;
-  margin-bottom: 60px;
-  color: #ffffff;
-}
+    /* Title */
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 60px;
+      color: #ffffff;
+    }
 
-/* Projects grid */
-.projects {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding-bottom: 60px;
-}
+    /* Projects grid */
+    .projects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding-bottom: 60px;
+    }
 
-/* Individual project card */
-.project {
-  background-color: #1a1a1c;
-  border: 1px solid #2c2c2e;
-  border-radius: 16px;
-  padding: 30px;
-  width: 320px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-align: center;
-}
+    /* Individual project card */
+    .project {
+      background-color: #1a1a1c;
+      border: 1px solid rgba(0, 220, 130, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      width: 320px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
 
-.project:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(0, 220, 130, 0.3);
-}
+    .project:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0, 220, 128, 0.859);
+    }
 
-/* Project title */
-.project-title {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #00dc82;
-}
+    .notes {
+      background-color: #1a1a1c;
+      border: 1px solid rgb(255, 174, 0);
+      border-radius: 16px;
+      padding: 15px;
+      width: 320px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
 
-/* Version */
-.project-version {
-  font-size: 1rem;
-  color: #b0b0b0;
-  margin-bottom: 15px;
-}
+    .notes:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgb(255, 174, 0);
+    }
 
-/* Changelog button */
-.changelog-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background-color: #00dc82;
-  color: #0f0f10;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-}
+    /* Project title */
+    .project-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #00dc82;
+    }
 
-.changelog-btn:hover {
-  background-color: #00b76b;
-}
+    /* Version */
+    .project-version {
+      font-size: 1rem;
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
+
+    /* Changelog button */
+    .changelog-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background-color: #00dc82;
+      color: #0f0f10;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .changelog-btn:hover {
+      background-color: #00b76b;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo">chand6464</div>
@@ -111,7 +130,8 @@ main {
 
     <div class="projects">
       <!-- Project Card 1 -->
-      <div class="project" onclick="window.location.href='https://www.dropbox.com/scl/fi/ei3sit7wlcq72gxqqc8j8/bChand-3CRYSTAL.zip?rlkey=0ole24uzkbdhzt6mmldwcvi5u&st=lpw55ky5&dl=1'">
+      <div class="project"
+        onclick="window.location.href='https://www.dropbox.com/scl/fi/ei3sit7wlcq72gxqqc8j8/bChand-3CRYSTAL.zip?rlkey=0ole24uzkbdhzt6mmldwcvi5u&st=lpw55ky5&dl=1'">
         <h2 class="project-title">chand6464's CPVP+ Pack</h2>
         <p class="project-version">1.16 → 1.21+</p>
         <a class="changelog-btn" href="changelog/ChandCrystal.md" onclick="event.stopPropagation();">
@@ -120,7 +140,8 @@ main {
       </div>
 
       <!-- Project Card 2 (example duplicate) -->
-      <div class="project" onclick="window.location.href='https://www.dropbox.com/scl/fi/6v74ikpz6oodj871op06t/Chand-s-Best-Optimization-Mods.zip?rlkey=akjruz13dn0wf981o4mh3bp5b&e=2&st=4vcknoi0&dl=1'">
+      <div class="project"
+        onclick="window.location.href='https://www.dropbox.com/scl/fi/6v74ikpz6oodj871op06t/Chand-s-Best-Optimization-Mods.zip?rlkey=akjruz13dn0wf981o4mh3bp5b&e=2&st=4vcknoi0&dl=1'">
         <h2 class="project-title">chand6464 Best Optimization Mods Latest</h2>
         <p class="project-version">Only 1.21</p>
         <a class="changelog-btn" href="#" onclick="event.stopPropagation();">
@@ -129,8 +150,9 @@ main {
       </div>
 
       <!-- You can copy and paste more .project divs here -->
-      
-      <div class="project" onclick="window.location.href='https://www.dropbox.com/scl/fi/f3609ogthpoaj87u7dv3h/cTheNoobZan-e16x-8.zip?rlkey=4wq4wk0l8wwaaqtf2bll7r6lh&st=gvgjgsh9&dl=1'">
+
+      <div class="project"
+        onclick="window.location.href='https://www.dropbox.com/scl/fi/f3609ogthpoaj87u7dv3h/cTheNoobZan-e16x-8.zip?rlkey=4wq4wk0l8wwaaqtf2bll7r6lh&st=gvgjgsh9&dl=1'">
         <h2 class="project-title">TheNoobZan16x</h2>
         <p class="project-version">1.8.9</p>
         <a class="changelog-btn" href="#" onclick="event.stopPropagation();">
@@ -145,10 +167,39 @@ main {
           View Changelogs (Available)
         </a>
       </div>
-      
+
+
+<!-- FOOTER -->
+ <!-- FOOTER -->
+  <!-- FOOTER -->
+
+
+    </div><br>
+    <hr style="border: none; border-top: 1px solid #ffffff95; margin: 0px 0;">
+    <h2 class="project-title" style="text-decoration: underline; color: white;">Other stuff</h2><br><br>
+    
+    <div class="notes" style="margin: 0 auto;" onclick="window.location.href='upload'">
+      <h2 class="project-title">Upload Files (For report or staff members only)</h2>
     </div>
+<br><br>
+    <div class="notes" style="margin: 0 auto;" onclick="window.location.href='chandcrystal/betaindex.html'">
+      <h2 class="project-title">Beta development site</h2>
+    </div>
+
   </main>
+  <footer style="text-align: center; padding: 20px; color: #555;">
+    &copy; <span id="currentDate"></span> chand6464. All rights reserved.
+  </footer>
+
+  <script>
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    document.getElementById('currentDate').textContent = `${day}/${month}/${year}`;
+  </script>
+
+
 </body>
+
 </html>
-
-
