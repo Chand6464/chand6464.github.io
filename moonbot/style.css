@@ -1,0 +1,96 @@
+body {
+    background-color: #1b304d;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.bar{
+    background-color: #2b466c;
+    color: white;
+    padding: 10px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bar img{
+    height: 100px;
+    width: 100px;
+    flex-shrink: 0;
+    vertical-align: middle;
+    border-radius: 25%;
+}
+
+.bar h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.bar h2 a {
+    color: rgb(213, 227, 253);
+    text-decoration: underline;
+}
+
+.bar h2 a:open {
+    color: rgb(213, 227, 253);
+}
+
+.content {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #17263b;
+    border-radius: 25px;
+}
+
+.invitebtn {
+    align-items: center;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f5f9ff;
+    color: #17263b;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.invitebtn a {
+    color: #17263b;
+    text-decoration: solid;
+}
+
+.invitebtn a:hover {
+    color: #1b304d;
+}
+
+.invitebtn a:open {
+    color: #1b304d;
+}
+
+.tosbtn {
+    align-items: center;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a3c8ff;
+    color: #17263b;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.tosbtn a {
+    color: #17263b;
+    text-decoration: solid;
+}
+
+.tosbtn a:hover {
+    color: #1b304d;
+}
+
+.tosbtn a:open {
+    color: #1b304d;
+}
