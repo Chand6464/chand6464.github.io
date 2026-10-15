@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101923">
+    <title>Files | Sign in</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #101923;
+            color: #e7edf5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(55, 111, 151, 0.2), transparent 55%),
+                #101923;
+        }
+
+        .page {
+            width: min(100%, 440px);
+        }
+
+        .brand {
+            margin: 0 0 22px;
+            color: #f5f8fc;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+
+        .card {
+            padding: 34px;
+            border: 1px solid #293746;
+            border-radius: 10px;
+            background: #1b2733;
+            box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: #f5f8fc;
+            font-size: 1.45rem;
+            font-weight: 600;
+        }
+
+        .description {
+            margin: 0 0 26px;
+            color: #a8b7c7;
+            line-height: 1.5;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #dce5ee;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            min-height: 45px;
+            padding: 10px 12px;
+            border: 1px solid #405366;
+            border-radius: 5px;
+            outline: none;
+            background: #131d27;
+            color: #f5f8fc;
+            font: inherit;
+        }
+
+        input:focus {
+            border-color: #3c9bd6;
+            box-shadow: 0 0 0 3px rgba(60, 155, 214, 0.2);
+        }
+
+        button {
+            width: 100%;
+            min-height: 45px;
+            border: 0;
+            border-radius: 5px;
+            background: #2586bd;
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+        }
+
+        button:hover {
+            background: #2d99d5;
+        }
+
+        button:focus-visible {
+            outline: 3px solid #a8ddfb;
+            outline-offset: 3px;
+        }
+
+        .text-button {
+            margin-top: 12px;
+            background: transparent;
+            color: #a8cde2;
+            font-weight: 500;
+        }
+
+        .text-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .error {
+            min-height: 1.4em;
+            margin: 0 0 14px;
+            color: #ff9b9b;
+            font-size: 0.9rem;
+        }
+
+        .notice {
+            margin: 18px 2px 0;
+            color: #9babb9;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .files {
+            width: min(100%, 1100px);
+        }
+
+        .files-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .files-header h1 {
+            margin: 0;
+        }
+
+        .files-header button {
+            width: auto;
+            min-width: 100px;
+            padding: 0 16px;
+        }
+
+        .files-content {
+            display: grid;
+            min-height: 65vh;
+            place-items: center;
+            padding: 32px;
+            border: 1px solid #293746;
+            border-radius: 10px;
+            background: #1b2733;
+            color: #c3cfda;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .files-content p {
+            margin: 0 0 18px;
+        }
+
+        .dropbox-link {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 5px;
+            background: #2586bd;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .dropbox-link:hover {
+            background: #2d99d5;
+        }
+
+        .dropbox-link:focus-visible {
+            outline: 3px solid #a8ddfb;
+            outline-offset: 3px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 26px 22px;
+            }
+
+            .files-header {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page" id="loginPage">
+        <p class="brand">Files</p>
+        <section class="card" aria-labelledby="loginTitle">
+            <div id="credentialsStep">
+                <h1 id="loginTitle">Sign in to your account</h1>
+                <p class="description">Enter your username and password to continue.</p>
+                <form id="credentialsForm">
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required>
+                    </div>
+                    <p class="error" id="credentialsError" role="alert" aria-live="polite"></p>
+                    <button type="submit">Continue</button>
+                </form>
+            </div>
+
+            <div id="twoFactorStep" hidden>
+                <h1 id="twoFactorTitle">Two-factor authentication</h1>
+                <p class="description">Enter your authentication code to open the files.</p>
+                <form id="twoFactorForm">
+                    <div class="field">
+                        <label for="twoFactorCode">Authentication code</label>
+                        <input id="twoFactorCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" required>
+                    </div>
+                    <p class="error" id="twoFactorError" role="alert" aria-live="polite"></p>
+                    <button type="submit">Verify code</button>
+                    <button class="text-button" id="backButton" type="button">Back to sign in</button>
+                </form>
+            </div>
+        </section>
+        <p class="notice">Not Pterodactyl</p>
+    </main>
+
+    <main class="files" id="filesPage" hidden>
+        <header class="files-header">
+            <h1>Your files</h1>
+            <button id="logoutButton" type="button">Log out</button>
+        </header>
+        <section class="files-content" aria-label="Main files">
+            <div>
+                <p>Dropbox does not allow this shared folder to be displayed inside another website.</p>
+                <a
+                    class="dropbox-link"
+                    href="https://www.dropbox.com/scl/fo/4lkmjyivch9bqasg2r40h/AG0cT34YaZudpGy4WV_F8j0?rlkey=4ebvtnkez9g43wyht305tbae7&amp;st=6v8xqy0p&amp;dl=0"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Open Dropbox folder
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const AUTH_CONFIG = {
+            username: "admin",
+            password: "msa202526",
+            twoFactorCode: "67911"
+        };
+
+        const loginPage = document.getElementById("loginPage");
+        const filesPage = document.getElementById("filesPage");
+        const credentialsStep = document.getElementById("credentialsStep");
+        const twoFactorStep = document.getElementById("twoFactorStep");
+        const credentialsForm = document.getElementById("credentialsForm");
+        const twoFactorForm = document.getElementById("twoFactorForm");
+        const credentialsError = document.getElementById("credentialsError");
+        const twoFactorError = document.getElementById("twoFactorError");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const twoFactorInput = document.getElementById("twoFactorCode");
+
+        credentialsForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            credentialsError.textContent = "";
+
+            if (usernameInput.value !== AUTH_CONFIG.username || passwordInput.value !== AUTH_CONFIG.password) {
+                credentialsError.textContent = "The username or password is incorrect.";
+                passwordInput.value = "";
+                passwordInput.focus();
+                return;
+            }
+
+            credentialsStep.hidden = true;
+            twoFactorStep.hidden = false;
+            twoFactorInput.focus();
+        });
+
+        twoFactorForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            twoFactorError.textContent = "";
+
+            if (twoFactorInput.value !== AUTH_CONFIG.twoFactorCode) {
+                twoFactorError.textContent = "The authentication code is incorrect.";
+                twoFactorInput.value = "";
+                twoFactorInput.focus();
+                return;
+            }
+
+            loginPage.hidden = true;
+            filesPage.hidden = false;
+        });
+
+        document.getElementById("backButton").addEventListener("click", () => {
+            twoFactorStep.hidden = true;
+            credentialsStep.hidden = false;
+            twoFactorInput.value = "";
+            twoFactorError.textContent = "";
+            passwordInput.focus();
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", () => {
+            filesPage.hidden = true;
+            loginPage.hidden = false;
+            twoFactorStep.hidden = true;
+            credentialsStep.hidden = false;
+            credentialsForm.reset();
+            twoFactorForm.reset();
+            credentialsError.textContent = "";
+            twoFactorError.textContent = "";
+            usernameInput.focus();
+        });
+    </script>
+</body>
+</html>
