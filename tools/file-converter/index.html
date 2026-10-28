@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="Convert common image and text files privately in your browser. No uploads, account, or database.">
+  <title>File Converter — chand6464</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17212b;
+      --muted: #64717d;
+      --line: #e2e7ec;
+      --green: #2ab574;
+      --green-dark: #188958;
+      --surface: #fff;
+      --page: #f7f8fa;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--page);
+      color: var(--ink);
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+      height: 68px;
+      padding: 0 clamp(20px, 5vw, 72px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -.6px;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--green);
+      color: #fff;
+    }
+
+    .brand-mark svg { width: 21px; height: 21px; }
+
+    .top-note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main {
+      width: min(940px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 67px 0 56px;
+    }
+
+    .intro { text-align: center; }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 47px);
+      letter-spacing: -1.8px;
+      line-height: 1.13;
+    }
+
+    .intro-copy {
+      max-width: 590px;
+      margin: 15px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .converter {
+      margin: 38px auto 0;
+      padding: clamp(20px, 4vw, 36px);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgb(22 36 49 / 5%);
+    }
+
+    .drop-zone {
+      min-height: 224px;
+      padding: 30px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #cbd5dc;
+      border-radius: 12px;
+      background: #fbfcfd;
+      text-align: center;
+      transition: border-color .16s ease, background .16s ease;
+    }
+
+    .drop-zone.is-over {
+      border-color: var(--green);
+      background: #f0fbf6;
+    }
+
+    .upload-icon {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 11px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #e9f8f1;
+      color: var(--green-dark);
+    }
+
+    .upload-icon svg { width: 25px; height: 25px; }
+
+    .drop-heading {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 680;
+    }
+
+    .file-name {
+      max-width: 100%;
+      margin: 8px 0 0;
+      overflow-wrap: anywhere;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pick-button, .convert-button {
+      min-height: 45px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--green);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background .15s ease, transform .15s ease;
+    }
+
+    .pick-button { margin-top: 16px; }
+    .pick-button:hover, .convert-button:hover:not(:disabled) { background: var(--green-dark); }
+    .pick-button:active, .convert-button:active:not(:disabled) { transform: translateY(1px); }
+    .convert-button:disabled { cursor: not-allowed; opacity: .48; }
+
+    .separator {
+      margin: 17px 0 0;
+      color: #86919a;
+      font-size: 12px;
+    }
+
+    .format-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+      align-items: end;
+      gap: 15px;
+      margin-top: 23px;
+    }
+
+    .format-field label {
+      display: block;
+      margin: 0 0 8px;
+      color: #4a5864;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    select {
+      width: 100%;
+      height: 46px;
+      padding: 0 38px 0 13px;
+      border: 1px solid #d5dde3;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    select:focus-visible, button:focus-visible, a:focus-visible {
+      outline: 3px solid rgb(42 181 116 / 35%);
+      outline-offset: 2px;
+    }
+
+    .arrow {
+      height: 46px;
+      display: grid;
+      place-items: center;
+      color: #7d8992;
+      font-size: 20px;
+    }
+
+    .convert-button {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .status {
+      min-height: 22px;
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .status.error { color: #b42318; }
+    .status.success { color: var(--green-dark); }
+
+    .privacy {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .privacy svg { width: 15px; height: 15px; flex: 0 0 auto; color: var(--green-dark); }
+
+    .formats {
+      margin-top: 38px;
+      padding: 23px 25px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .formats h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .formats p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    footer {
+      padding: 21px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 560px) {
+      .topbar { height: 60px; padding: 0 18px; }
+      .top-note { max-width: 130px; text-align: right; }
+      main { padding-top: 45px; }
+      .format-row { grid-template-columns: minmax(0, 1fr); gap: 11px; }
+      .arrow { height: 22px; transform: rotate(90deg); }
+      .formats { padding: 19px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../index.html" aria-label="chand6464 home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7.1 18.1h10a4 4 0 0 0 .4-8 5.7 5.7 0 0 0-10.9-.8 4.4 4.4 0 0 0 .5 8.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m9 13 3-3 3 3m-3-3v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>chand6464</span>
+    </a>
+    <span class="top-note">Free online file converter</span>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Simple · Private · Free</p>
+      <h1 id="page-title">Convert your files</h1>
+      <p class="intro-copy">Choose a file and a format. Your files are processed on your device — nothing is uploaded to a server.</p>
+    </section>
+
+    <section class="converter" aria-label="File conversion">
+      <div class="drop-zone" id="drop-zone">
+        <span class="upload-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14.5v3A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <p class="drop-heading" id="drop-heading">Drop your file here</p>
+        <p class="file-name" id="file-name">Choose one file to get started</p>
+        <button class="pick-button" id="pick-button" type="button">Select file</button>
+        <input id="file-input" type="file" accept=".avif,.bmp,.eps,.gif,.ico,.jpg,.jpeg,.odd,.png,.ps,.psd,.tif,.tiff,.webp,.svg,.txt,.md,.html,.json,.csv" hidden>
+        <p class="separator">or drop a file here</p>
+      </div>
+
+      <div class="format-row">
+        <div class="format-field">
+          <label for="from-format">Convert from</label>
+          <select id="from-format" aria-label="Source format" disabled>
+            <option value="">Select a file first</option>
+          </select>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="format-field">
+          <label for="to-format">Convert to</label>
+          <select id="to-format" aria-label="Target format" disabled>
+            <option value="">Select a file first</option>
+          </select>
+        </div>
+      </div>
+      <button class="convert-button" id="convert-button" type="button" disabled>Convert file</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3 5 6v5c0 4.5 2.9 8.2 7 10 4.1-1.8 7-5.5 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Files stay on your device. No account, upload, or database.
+      </p>
+    </section>
+
+    <section class="formats" aria-labelledby="formats-title">
+      <h2 id="formats-title">Supported conversions</h2>
+      <p>Images: AVIF, BMP, GIF, ICO, JPG, PNG, PSD, TIFF, and WEBP can be converted between each other. SVG converts to PNG, JPG, or WEBP; image files can also be exported as EPS or PS. EPS/PS input needs Ghostscript, which is not included. ODD is not a recognized raster image format; confirm the actual file type before converting it. Text: CSV ↔ JSON, HTML/Markdown to plain text or HTML, and JSON to plain text. Other file types are not converted by simply renaming them.</p>
+    </section>
+  </main>
+
+  <footer>Free to use · Runs in your browser · No files leave your device · <a href="vendor/magick-wasm/LICENSE">ImageMagick license</a></footer>
+
+  <script>
+    const fileInput = document.getElementById("file-input");
+    const dropZone = document.getElementById("drop-zone");
+    const pickButton = document.getElementById("pick-button");
+    const dropHeading = document.getElementById("drop-heading");
+    const fileName = document.getElementById("file-name");
+    const fromFormat = document.getElementById("from-format");
+    const toFormat = document.getElementById("to-format");
+    const convertButton = document.getElementById("convert-button");
+    const status = document.getElementById("status");
+    let selectedFile = null;
+    let activeCategory = null;
+
+    const imageSourceFormats = ["avif", "bmp", "gif", "ico", "jpg", "png", "psd", "svg", "tiff", "webp"];
+    const imageTargetFormats = ["avif", "bmp", "eps", "gif", "ico", "jpg", "png", "ps", "psd", "tiff", "webp"];
+    const textFormats = ["txt", "md", "html", "json", "csv"];
+    const mimeTypes = {
+      avif: "image/avif",
+      bmp: "image/bmp",
+      eps: "application/postscript",
+      gif: "image/gif",
+      ico: "image/x-icon",
+      png: "image/png",
+      jpg: "image/jpeg",
+      ps: "application/postscript",
+      psd: "image/vnd.adobe.photoshop",
+      tiff: "image/tiff",
+      webp: "image/webp",
+      svg: "image/svg+xml",
+      txt: "text/plain",
+      md: "text/markdown",
+      html: "text/html",
+      json: "application/json",
+      csv: "text/csv"
+    };
+    let imageWorker;
+    let nextConversionId = 0;
+    const pendingConversions = new Map();
+
+    pickButton.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length) setFile(fileInput.files[0]);
+    });
+
+    ["dragenter", "dragover"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropZone.classList.add("is-over");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropZone.classList.remove("is-over");
+      });
+    });
+
+    dropZone.addEventListener("drop", (event) => {
+      const [file] = event.dataTransfer.files;
+      if (file) setFile(file);
+    });
+
+    fromFormat.addEventListener("change", updateTargets);
+    convertButton.addEventListener("click", convertFile);
+
+    function extensionOf(name) {
+      const match = name.toLowerCase().match(/\.([^.]+)$/);
+      if (!match) return "";
+      return ({ jpeg: "jpg", tif: "tiff" })[match[1]] || match[1];
+    }
+
+    function setOptions(select, formats, selected) {
+      select.replaceChildren(...formats.map((format) => {
+        const option = document.createElement("option");
+        option.value = format;
+        option.textContent = format.toUpperCase();
+        option.selected = format === selected;
+        return option;
+      }));
+      select.disabled = formats.length === 0;
+    }
+
+    function setFile(file) {
+      const extension = extensionOf(file.name);
+      const category = [...imageSourceFormats, "eps", "ps", "odd"].includes(extension)
+        ? "image"
+        : textFormats.includes(extension)
+          ? "text"
+          : null;
+
+      selectedFile = file;
+      activeCategory = category;
+      fileName.textContent = file.name;
+      dropHeading.textContent = "File ready";
+      status.className = "status";
+
+      if (extension === "eps" || extension === "ps") {
+        setOptions(fromFormat, [], "");
+        setOptions(toFormat, [], "");
+        convertButton.disabled = true;
+        setStatus(`${extension.toUpperCase()} input needs Ghostscript to rasterize, and Ghostscript is not included. You can still convert other images to ${extension.toUpperCase()}.`, "error");
+        return;
+      }
+
+      if (extension === "odd") {
+        setOptions(fromFormat, [], "");
+        setOptions(toFormat, [], "");
+        convertButton.disabled = true;
+        setStatus("ODD is not a recognized raster image format. Check whether the file is actually ODG or another format, then choose its real extension.", "error");
+        return;
+      }
+
+      if (!category) {
+        setOptions(fromFormat, [], "");
+        setOptions(toFormat, [], "");
+        convertButton.disabled = true;
+        status.className = "status error";
+        status.textContent = "This file type is not supported. Try an image (AVIF, BMP, GIF, ICO, JPG, PNG, PSD, TIFF, WEBP, or SVG) or a text file (CSV, JSON, HTML, Markdown, or TXT).";
+        return;
+      }
+
+      const formats = category === "image" ? imageSourceFormats : textFormats;
+      setOptions(fromFormat, formats, extension);
+      updateTargets();
+      status.textContent = category === "image"
+        ? "Image conversions use a local browser codec. The first conversion loads it once (about 15 MB)."
+        : "Choose an available text conversion. Unsupported format changes are disabled.";
+      convertButton.disabled = false;
+    }
+
+    function updateTargets() {
+      if (!selectedFile || !activeCategory) return;
+      const source = fromFormat.value;
+      let targets;
+
+      if (activeCategory === "image") {
+        targets = (source === "svg" ? ["png", "jpg", "webp"] : imageTargetFormats)
+          .filter((format) => format !== source);
+      } else {
+        const supported = {
+          txt: ["html", "md"],
+          md: ["html", "txt"],
+          html: ["txt"],
+          json: ["csv", "txt"],
+          csv: ["json", "txt"]
+        };
+        targets = supported[source] || [];
+      }
+
+      setOptions(toFormat, targets, targets.includes(source) ? source : targets[0]);
+      convertButton.disabled = targets.length === 0;
+    }
+
+    function setStatus(message, kind) {
+      status.textContent = message;
+      status.className = `status${kind ? ` ${kind}` : ""}`;
+    }
+
+    async function convertFile() {
+      if (!selectedFile || !fromFormat.value || !toFormat.value) return;
+      convertButton.disabled = true;
+      setStatus(activeCategory === "image" && fromFormat.value !== "svg"
+        ? "Loading the local image codec and converting…"
+        : "Converting in your browser…");
+
+      try {
+        const source = fromFormat.value;
+        const target = toFormat.value;
+        const blob = activeCategory === "image"
+          ? await convertImage(selectedFile, source, target)
+          : await convertText(selectedFile, source, target);
+        const outputName = `${selectedFile.name.replace(/\.[^.]+$/, "") || "converted"}.${target}`;
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = outputName;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        setStatus(`Done — ${outputName} has been downloaded.`, "success");
+      } catch (error) {
+        setStatus(error instanceof Error ? error.message : "The file could not be converted.", "error");
+      } finally {
+        convertButton.disabled = false;
+      }
+    }
+
+    async function convertImage(file, source, target) {
+      if (source !== "svg") {
+        return convertWithImageMagick(file, source, target);
+      }
+
+      if (!["png", "jpg", "webp"].includes(target)) {
+        throw new Error("SVG input can be converted to PNG, JPG, or WEBP.");
+      }
+
+      const image = new Image();
+      const url = URL.createObjectURL(file);
+
+      try {
+        await new Promise((resolve, reject) => {
+          image.onload = resolve;
+          image.onerror = () => reject(new Error("This image could not be opened by your browser."));
+          image.src = url;
+        });
+
+        const canvas = document.createElement("canvas");
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        if (!canvas.width || !canvas.height) throw new Error("The image has invalid dimensions.");
+        const context = canvas.getContext("2d");
+        if (!context) throw new Error("Your browser could not create an image canvas.");
+        if (target === "jpg") {
+          context.fillStyle = "#fff";
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        context.drawImage(image, 0, 0);
+
+        const mimeType = mimeTypes[target];
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, mimeType, 0.92));
+        if (!blob) throw new Error(`Your browser could not export this image as ${target.toUpperCase()}.`);
+        if (blob.type !== mimeType) throw new Error(`Your browser does not support ${target.toUpperCase()} image export.`);
+        return blob;
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    async function convertWithImageMagick(file, source, target) {
+      const worker = getImageWorker();
+      const fileBytes = await file.arrayBuffer();
+      const id = ++nextConversionId;
+
+      return new Promise((resolve, reject) => {
+        pendingConversions.set(id, { resolve, reject });
+        try {
+          worker.postMessage({
+            id,
+            bytes: fileBytes,
+            source: source.toUpperCase() === "JPG" ? "JPEG" : source.toUpperCase(),
+            target: target.toUpperCase() === "JPG" ? "JPEG" : target.toUpperCase()
+          }, [fileBytes]);
+        } catch (error) {
+          pendingConversions.delete(id);
+          reject(error);
+        }
+      });
+    }
+
+    function getImageWorker() {
+      if (imageWorker) return imageWorker;
+
+      imageWorker = new Worker("./vendor/magick-wasm/worker.js", { type: "module" });
+      imageWorker.addEventListener("message", ({ data }) => {
+        const pending = pendingConversions.get(data.id);
+        if (!pending) return;
+        pendingConversions.delete(data.id);
+
+        if (data.error) {
+          pending.reject(new Error(data.error));
+        } else {
+          pending.resolve(new Blob([data.output], { type: data.type }));
+        }
+      });
+      imageWorker.addEventListener("error", (event) => {
+        const failedWorker = imageWorker;
+        imageWorker = null;
+        failedWorker.terminate();
+        pendingConversions.forEach(({ reject }) => {
+          reject(new Error(event.message || "The local image codec worker failed."));
+        });
+        pendingConversions.clear();
+      });
+
+      return imageWorker;
+    }
+
+    async function convertText(file, source, target) {
+      const content = await file.text();
+      let output;
+
+      if (source === "csv" && target === "json") {
+        output = JSON.stringify(parseCsv(content), null, 2);
+      } else if (source === "json" && target === "csv") {
+        output = toCsv(JSON.parse(content));
+      } else if (source === "json" && target === "txt") {
+        output = JSON.stringify(JSON.parse(content), null, 2);
+      } else if (target === "txt" && source === "html") {
+        const documentFromFile = new DOMParser().parseFromString(content, "text/html");
+        output = documentFromFile.body.innerText || documentFromFile.body.textContent || "";
+      } else if (target === "txt" && source === "md") {
+        output = content
+          .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+          .replace(/^ {0,3}#{1,6}\s+/gm, "")
+          .replace(/[*_~`]/g, "")
+          .replace(/^\s*[-+*]\s+/gm, "")
+          .replace(/^\s*\d+\.\s+/gm, "");
+      } else if (target === "html" && source === "md") {
+        output = markdownToHtml(content);
+      } else if (target === "html" && source === "txt") {
+        output = `<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(file.name)}</title></head><body><pre>${escapeHtml(content)}</pre></body></html>`;
+      } else {
+        throw new Error(`Conversion from ${source.toUpperCase()} to ${target.toUpperCase()} is not supported.`);
+      }
+
+      return new Blob([output], { type: mimeTypes[target] || "text/plain" });
+    }
+
+    function parseCsv(input) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let quoted = false;
+
+      for (let index = 0; index < input.length; index += 1) {
+        const character = input[index];
+        if (quoted) {
+          if (character === '"' && input[index + 1] === '"') {
+            cell += '"';
+            index += 1;
+          } else if (character === '"') {
+            quoted = false;
+          } else {
+            cell += character;
+          }
+        } else if (character === '"' && cell.length === 0) {
+          quoted = true;
+        } else if (character === ",") {
+          row.push(cell);
+          cell = "";
+        } else if (character === "\n" || character === "\r") {
+          row.push(cell);
+          rows.push(row);
+          row = [];
+          cell = "";
+          if (character === "\r" && input[index + 1] === "\n") index += 1;
+        } else {
+          cell += character;
+        }
+      }
+
+      if (quoted) throw new Error("The CSV file contains an unclosed quoted field.");
+      if (cell.length || row.length || input.endsWith(",")) {
+        row.push(cell);
+        rows.push(row);
+      }
+      while (rows.length && rows[rows.length - 1].every((value) => value === "")) rows.pop();
+      if (!rows.length) return [];
+
+      const headers = rows.shift().map((header, index) => {
+        const cleanHeader = index === 0 ? header.replace(/^\uFEFF/, "") : header;
+        return cleanHeader.trim() || `column_${index + 1}`;
+      });
+      const uniqueHeaders = headers.map((header, index) => {
+        const duplicatesBefore = headers.slice(0, index).filter((item) => item === header).length;
+        return duplicatesBefore ? `${header}_${duplicatesBefore + 1}` : header;
+      });
+      return rows.map((values) => Object.fromEntries(
+        uniqueHeaders.map((header, index) => [header, values[index] ?? ""])
+      ));
+    }
+
+    function toCsv(value) {
+      if (!Array.isArray(value) || !value.every((item) => item !== null && typeof item === "object" && !Array.isArray(item))) {
+        throw new Error("JSON to CSV requires a JSON array of objects.");
+      }
+      if (!value.length) return "";
+      const headers = [...new Set(value.flatMap((item) => Object.keys(item)))];
+      const quote = (item) => {
+        const text = item === null || item === undefined
+          ? ""
+          : typeof item === "object"
+            ? JSON.stringify(item)
+            : String(item);
+        return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      };
+      return [headers, ...value.map((item) => headers.map((header) => item[header] ?? ""))]
+        .map((row) => row.map(quote).join(","))
+        .join("\r\n");
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function markdownToHtml(markdown) {
+      const escaped = escapeHtml(markdown);
+      const lines = escaped.split(/\r?\n/);
+      const html = [];
+      let inList = false;
+
+      for (const line of lines) {
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        const listItem = line.match(/^\s*[-+*]\s+(.+)$/);
+        if (listItem) {
+          if (!inList) html.push("<ul>");
+          inList = true;
+          html.push(`<li>${inlineMarkdown(listItem[1])}</li>`);
+          continue;
+        }
+        if (inList) {
+          html.push("</ul>");
+          inList = false;
+        }
+        if (!line.trim()) continue;
+        if (heading) {
+          const level = heading[1].length;
+          html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+        } else {
+          html.push(`<p>${inlineMarkdown(line)}</p>`);
+        }
+      }
+      if (inList) html.push("</ul>");
+      return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Converted Markdown</title></head><body>\n${html.join("\n")}\n</body></html>`;
+    }
+
+    function inlineMarkdown(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^ )]+)\)/g, '<a href="$2">$1</a>');
+    }
+  </script>
+</body>
+</html>
