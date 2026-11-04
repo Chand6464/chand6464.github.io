@@ -88,6 +88,21 @@
       box-shadow: 0 0 20px rgb(255, 174, 0);
     }
 
+    .notes-otherproj {
+      background-color: #1a1a1c;
+      border: 1px solid rgb(222, 185, 105);
+      border-radius: 16px;
+      padding: 15px;
+      width: 320px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .notes-otherproj:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgb(155, 142, 114);
+    }
     /* Project title */
     .project-title {
       font-size: 1.3rem;
@@ -170,24 +185,29 @@
 
 
 <!-- FOOTER -->
- <!-- FOOTER -->
-  <!-- FOOTER -->
-
-
+ 
     </div><br>
     <hr style="border: none; border-top: 1px solid #ffffff95; margin: 0px 0;">
     <h2 class="project-title" style="text-decoration: underline; color: white;">Other stuff</h2><br><br>
     
-    <div class="notes" style="margin: 0 auto;" onclick="window.location.href='upload'">
-      <h2 class="project-title">Upload Files (For report or staff members only)</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      <div class="notes" onclick="window.location.href='upload'">
+        <h2 class="project-title">Upload Files (For report or staff members only)</h2>
+      </div>
+
+      <div class="notes" onclick="window.location.href='tools/file-converter/'">
+        <h2 class="project-title">Private File Converter (Runs in your browser)</h2>
+      </div>
+
+      <div class="notes" onclick="window.location.href='https://chandsfiledropper.ai.studio'">
+        <h2 class="project-title">Chand's File Dropper</h2>
+      </div>
     </div>
-<br><br>
-    <div class="notes" style="margin: 0 auto;" onclick="window.location.href='tools/file-converter/'">
-      <h2 class="project-title">Private File Converter (Runs in your browser)</h2>
-    </div>
-<br><br>
-    <div class="notes" style="margin: 0 auto;" onclick="window.location.href='r/'">
-      <h2 class="project-title">Other Projects</h2>
+    <br>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      <div class="notes-otherproj" onclick="window.location.href='r/'">
+        <h2 class="project-title">Other Projects</h2>
+      </div>
     </div>
 
   </main>
