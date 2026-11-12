@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#11130f">
+    <meta name="description" content="A Windows desktop app in development to make keeping Minecraft mods up to date easier.">
+    <title>Minecraft Mod Updater for Windows | Chand6464</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --page: #11130f;
+            --panel: #191c17;
+            --panel-raised: #20241d;
+            --line: #30362a;
+            --text: #f0f2e9;
+            --muted: #a7ad9c;
+            --green: #9ac65a;
+            --green-bright: #b7e477;
+            --brown: #805332;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            background:
+                radial-gradient(ellipse at 50% 4%, rgba(116, 153, 66, 0.1), transparent 36rem),
+                var(--page);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .shell {
+            width: min(1120px, calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 5;
+            top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(17, 19, 15, 0.88);
+            backdrop-filter: blur(16px);
+        }
+
+        .nav {
+            display: flex;
+            min-height: 76px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 0.91rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            border: 1px solid #536a34;
+            background: linear-gradient(#91bd52 0 34%, #65472d 34% 100%);
+            box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.17);
+        }
+
+        .brand-mark::after {
+            position: absolute;
+            inset: 14px 0 0;
+            background: repeating-linear-gradient(90deg, transparent 0 8px, rgba(28, 23, 18, 0.23) 8px 12px);
+            content: "";
+        }
+
+        .brand span:last-child {
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: #c2c8b7;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            transition: color 150ms ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--green-bright);
+        }
+
+        .nav-links .nav-cta {
+            padding: 10px 15px;
+            border: 1px solid #454c38;
+            background: #22271d;
+            color: #e7eddc;
+        }
+
+        .hero {
+            padding: 90px 0 80px;
+            text-align: center;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 12px;
+            border: 1px solid #3b4730;
+            background: rgba(35, 44, 27, 0.72);
+            color: #c4d7a4;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.025em;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px rgba(154, 198, 90, 0.55);
+        }
+
+        h1 {
+            max-width: 850px;
+            margin: 25px auto 0;
+            font-size: clamp(2.7rem, 7.5vw, 5.35rem);
+            font-weight: 800;
+            letter-spacing: -0.075em;
+            line-height: 1.02;
+        }
+
+        h1 span {
+            color: var(--green-bright);
+        }
+
+        .hero-copy {
+            max-width: 620px;
+            margin: 22px auto 0;
+            color: var(--muted);
+            font-size: clamp(1rem, 2.2vw, 1.13rem);
+            line-height: 1.75;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 32px;
+        }
+
+        .dirt-button {
+            position: relative;
+            display: inline-flex;
+            min-height: 62px;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 25px;
+            border: 2px solid #4b3423;
+            background:
+                linear-gradient(90deg, rgba(44, 29, 19, 0.21) 50%, transparent 50%),
+                linear-gradient(rgba(196, 146, 91, 0.13) 50%, transparent 50%),
+                var(--brown);
+            background-position: 0 0, 7px 7px, 0 0;
+            background-size: 14px 14px, 14px 14px, auto;
+            box-shadow: inset 0 3px 0 rgba(255, 238, 195, 0.13), 0 5px 0 #39291d, 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: #fff5e4;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+            transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
+        }
+
+        .dirt-button::before {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            left: -2px;
+            height: 8px;
+            border: 2px solid #3d512b;
+            background: repeating-linear-gradient(90deg, #a4d367 0 18px, #85b54a 18px 34px);
+            content: "";
+        }
+
+        .dirt-button:hover {
+            filter: brightness(1.13);
+            transform: translateY(-2px);
+            box-shadow: inset 0 3px 0 rgba(255, 238, 195, 0.13), 0 7px 0 #39291d, 0 15px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .dirt-button:active {
+            transform: translateY(3px);
+            box-shadow: inset 0 3px 0 rgba(255, 238, 195, 0.13), 0 2px 0 #39291d, 0 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .dirt-button:focus-visible,
+        .nav a:focus-visible,
+        .brand:focus-visible {
+            outline: 2px solid var(--green-bright);
+            outline-offset: 5px;
+        }
+
+        .availability {
+            margin: 3px 0 0;
+            color: #9da492;
+            font-size: 0.78rem;
+        }
+
+        .availability strong {
+            color: #c6cbbd;
+        }
+
+        .preview-wrap {
+            position: relative;
+            width: min(860px, 100%);
+            margin: 68px auto 0;
+            text-align: left;
+        }
+
+        .preview-wrap::before {
+            position: absolute;
+            z-index: -1;
+            inset: 15% 13% -14%;
+            background: rgba(119, 158, 69, 0.14);
+            filter: blur(62px);
+            content: "";
+        }
+
+        .app-window {
+            overflow: hidden;
+            border: 1px solid #394031;
+            background: #171a15;
+            box-shadow: 0 26px 90px rgba(0, 0, 0, 0.48), 0 3px 0 rgba(255, 255, 255, 0.025) inset;
+        }
+
+        .window-bar {
+            display: flex;
+            height: 46px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 17px;
+            border-bottom: 1px solid #30352b;
+            background: #1d211a;
+            color: #bfc5b2;
+            font-size: 0.72rem;
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .window-title .brand-mark {
+            width: 18px;
+            height: 18px;
+        }
+
+        .window-title .brand-mark::after {
+            inset: 9px 0 0;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 7px;
+        }
+
+        .window-controls i {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #59604f;
+        }
+
+        .app-body {
+            display: grid;
+            min-height: 300px;
+            grid-template-columns: 190px 1fr;
+        }
+
+        .sidebar {
+            padding: 24px 15px;
+            border-right: 1px solid #30352b;
+            background: #191c17;
+        }
+
+        .sidebar-label {
+            margin: 0 0 11px 9px;
+            color: #737b69;
+            font-size: 0.61rem;
+            font-weight: 800;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 9px;
+            color: #e5e9dd;
+            font-size: 0.75rem;
+            font-weight: 650;
+        }
+
+        .profile.active {
+            border: 1px solid #3b4930;
+            background: #252d20;
+        }
+
+        .profile-icon {
+            display: grid;
+            width: 24px;
+            height: 24px;
+            place-items: center;
+            background: linear-gradient(#89b74c 0 34%, #69462d 34%);
+            color: #f1f3e8;
+            font-size: 0.65rem;
+            font-weight: 900;
+        }
+
+        .sidebar-foot {
+            margin: 25px 9px 0;
+            color: #858c7a;
+            font-size: 0.65rem;
+            line-height: 1.7;
+        }
+
+        .mod-content {
+            padding: 25px 28px;
+        }
+
+        .mod-heading {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .mod-heading h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .mod-heading p {
+            margin: 6px 0 0;
+            color: #929989;
+            font-size: 0.7rem;
+        }
+
+        .scan-state {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 9px;
+            border: 1px solid #3d4a30;
+            background: #22291d;
+            color: #c5dfa0;
+            font-size: 0.64rem;
+            font-weight: 700;
+        }
+
+        .scan-state::before {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a8d669;
+            content: "";
+        }
+
+        .mod-list {
+            display: grid;
+            gap: 8px;
+            margin-top: 22px;
+        }
+
+        .mod-row {
+            display: grid;
+            min-height: 54px;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            align-items: center;
+            gap: 14px;
+            padding: 8px 11px;
+            border: 1px solid #2e342a;
+            background: #1d211b;
+        }
+
+        .mod-name {
+            overflow: hidden;
+            color: #e0e5d7;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .mod-version {
+            color: #959d8a;
+            font-size: 0.65rem;
+            white-space: nowrap;
+        }
+
+        .mod-status {
+            min-width: 72px;
+            padding: 5px 7px;
+            background: #28331f;
+            color: #c3dd9c;
+            font-size: 0.61rem;
+            font-weight: 750;
+            text-align: center;
+        }
+
+        .mod-status.current {
+            background: #292d26;
+            color: #a6ac9c;
+        }
+
+        .preview-caption {
+            margin: 13px 0 0;
+            color: #818878;
+            font-size: 0.68rem;
+            text-align: center;
+        }
+
+        .section {
+            padding: 78px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .section-heading {
+            max-width: 640px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+
+        .section-kicker {
+            margin: 0 0 11px;
+            color: var(--green);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: clamp(1.8rem, 4vw, 2.65rem);
+            letter-spacing: -0.06em;
+            line-height: 1.12;
+        }
+
+        .section-heading > p:last-child {
+            margin: 14px 0 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .feature-card {
+            min-height: 185px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            background: linear-gradient(145deg, rgba(35, 40, 30, 0.9), rgba(24, 27, 22, 0.8));
+        }
+
+        .feature-icon {
+            display: grid;
+            width: 35px;
+            height: 35px;
+            place-items: center;
+            border: 1px solid #46553a;
+            background: #293320;
+            color: var(--green-bright);
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .feature-card h3 {
+            margin: 18px 0 8px;
+            font-size: 0.92rem;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #a6ad9a;
+            font-size: 0.79rem;
+            line-height: 1.65;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding: 0 10px 0 47px;
+            counter-increment: step;
+        }
+
+        .step::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: grid;
+            width: 32px;
+            height: 32px;
+            place-items: center;
+            border: 1px solid #48563a;
+            background: #262e20;
+            color: var(--green-bright);
+            content: counter(step, decimal-leading-zero);
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin: 4px 0 8px;
+            font-size: 0.9rem;
+        }
+
+        .step p {
+            margin: 0;
+            color: #a6ad9a;
+            font-size: 0.79rem;
+            line-height: 1.65;
+        }
+
+        .download-section {
+            padding: 65px 24px;
+            border: 1px solid #3d4931;
+            background:
+                linear-gradient(110deg, rgba(92, 123, 53, 0.13), transparent 58%),
+                #1a1e17;
+            text-align: center;
+        }
+
+        .download-section h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 4vw, 2.5rem);
+            letter-spacing: -0.06em;
+        }
+
+        .download-section > p {
+            max-width: 520px;
+            margin: 13px auto 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .download-section .dirt-button {
+            min-height: 54px;
+            padding-inline: 20px;
+            font-size: 0.82rem;
+        }
+
+        .site-footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 28px 0 34px;
+            color: #858c7a;
+            font-size: 0.72rem;
+        }
+
+        .site-footer a {
+            color: #b3bba7;
+            text-decoration: none;
+        }
+
+        .site-footer a:hover {
+            color: var(--green-bright);
+        }
+
+        @media (max-width: 720px) {
+            .shell {
+                width: min(100% - 36px, 560px);
+            }
+
+            .hero {
+                padding-top: 68px;
+            }
+
+            .nav-links {
+                gap: 17px;
+            }
+
+            .app-body {
+                grid-template-columns: 145px 1fr;
+            }
+
+            .sidebar {
+                padding-inline: 10px;
+            }
+
+            .mod-content {
+                padding: 21px 17px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                min-height: unset;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .nav {
+                min-height: 66px;
+            }
+
+            .brand {
+                gap: 8px;
+                font-size: 0.8rem;
+            }
+
+            .nav-links {
+                gap: 13px;
+                font-size: 0.73rem;
+            }
+
+            .nav-links .nav-cta {
+                padding: 8px 10px;
+            }
+
+            .hero {
+                padding-top: 58px;
+            }
+
+            h1 {
+                font-size: clamp(2.55rem, 12vw, 3.8rem);
+            }
+
+            .preview-wrap {
+                margin-top: 49px;
+            }
+
+            .window-bar {
+                height: 40px;
+            }
+
+            .app-body {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .mod-content {
+                min-height: 260px;
+                padding: 20px 14px;
+            }
+
+            .mod-row {
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 5px 10px;
+                padding: 9px;
+            }
+
+            .mod-version {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .mod-status {
+                grid-column: 2;
+                grid-row: 1 / span 2;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="#top" aria-label="Minecraft Mod Updater home">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>MC Mod Updater</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a class="nav-cta" href="#download">Get the app</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="hero shell" aria-labelledby="hero-title">
+            <div class="status-pill"><span class="status-dot" aria-hidden="true"></span> A Windows app in development</div>
+            <h1 id="hero-title">Your mods, <span>up to date.</span></h1>
+            <p class="hero-copy">Spend less time hunting for mod updates and more time in your world. Minecraft Mod Updater is being made to help Windows players keep their mod folders current with less hassle.</p>
+            <div class="hero-actions">
+                <a class="dirt-button" href="">
+                    <span class="brand-mark" aria-hidden="true"></span>
+                    <span>Get Minecraft Mod Updater</span>
+                </a>
+                <p class="availability"><strong>Coming soon for Windows</strong> · No installer published yet</p>
+            </div>
+
+            <div class="preview-wrap" aria-label="Illustrative app interface preview">
+                <div class="app-window">
+                    <div class="window-bar">
+                        <div class="window-title"><span class="brand-mark" aria-hidden="true"></span> Minecraft Mod Updater <span style="color:#858c7a;font-weight:400">· Preview</span></div>
+                        <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="app-body">
+                        <aside class="sidebar" aria-label="Example game profile">
+                            <p class="sidebar-label">Game profile</p>
+                            <div class="profile active"><span class="profile-icon" aria-hidden="true">M</span> Minecraft</div>
+                            <p class="sidebar-foot">A quick look at the kind of overview the app is being designed around.</p>
+                        </aside>
+                        <div class="mod-content">
+                            <div class="mod-heading">
+                                <div>
+                                    <h2>Your mods</h2>
+                                    <p>Example interface · details may change</p>
+                                </div>
+                                <span class="scan-state">Update check preview</span>
+                            </div>
+                            <div class="mod-list" aria-label="Example mod list">
+                                <div class="mod-row"><span class="mod-name">Example mod</span><span class="mod-version">Installed · 1.2.0</span><span class="mod-status">Update found</span></div>
+                                <div class="mod-row"><span class="mod-name">Another example</span><span class="mod-version">Installed · 2.4.1</span><span class="mod-status current">Up to date</span></div>
+                                <div class="mod-row"><span class="mod-name">Your next favorite mod</span><span class="mod-version">Installed · 0.9.3</span><span class="mod-status">Update found</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="preview-caption">Illustrative preview only — the app is still in development.</p>
+            </div>
+        </section>
+
+        <section class="section" id="features" aria-labelledby="features-title">
+            <div class="shell">
+                <div class="section-heading">
+                    <p class="section-kicker">Less busywork, more block time</p>
+                    <h2 id="features-title">A simpler way to manage mod updates</h2>
+                    <p>The goal is to make the routine parts of keeping a modded Minecraft setup current feel more straightforward.</p>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">↻</span>
+                        <h3>Check for updates</h3>
+                        <p>Find out when newer versions of your installed mods may be available, without searching through every page yourself.</p>
+                    </article>
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">▦</span>
+                        <h3>See your mods together</h3>
+                        <p>Get a clearer view of your Minecraft mods and their update status from one Windows desktop app.</p>
+                    </article>
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">⬇</span>
+                        <h3>Spend less time downloading</h3>
+                        <p>Make it easier to find the updates you need and get back to playing, building, and exploring.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="flow-title">
+            <div class="shell">
+                <div class="section-heading">
+                    <p class="section-kicker">The idea</p>
+                    <h2 id="flow-title">From mod folder to game time</h2>
+                    <p>A straightforward flow for checking your setup and finding the next update.</p>
+                </div>
+                <div class="steps">
+                    <article class="step">
+                        <h3>Choose your setup</h3>
+                        <p>Point the app to the Minecraft mods you want to keep an eye on.</p>
+                    </article>
+                    <article class="step">
+                        <h3>Check what’s new</h3>
+                        <p>Review the update information the app finds for your installed mods.</p>
+                    </article>
+                    <article class="step">
+                        <h3>Get back to playing</h3>
+                        <p>Spend less of your session tracking down mod versions by hand.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="shell" id="download" aria-labelledby="download-title">
+            <div class="download-section">
+                <p class="section-kicker">Made for Windows</p>
+                <h2 id="download-title">The next update is still loading.</h2>
+                <p>Minecraft Mod Updater is in development. There isn’t a Windows installer to download yet—check back here for release details.</p>
+                <a class="dirt-button" href="https://chand6464.github.io/mc-mod-updater/" aria-label="Minecraft Mod Updater release page">
+                    <span class="brand-mark" aria-hidden="true"></span>
+                    <span>Windows download coming soon</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer shell">
+        <span>© <span id="year"></span> Chand6464 · Minecraft Mod Updater</span>
+        <span>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</span>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
